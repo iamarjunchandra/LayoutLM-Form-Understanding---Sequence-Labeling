@@ -84,11 +84,11 @@ python run_seq_labeling.py  --data_dir data \
 
 ### Prediction on a new Image
 
-Import the module custom_preprocess.py
-Pass the image to custom_img_annotation_.write_annoteFile() for preprocessing the new image
-calling custom_img_annotation_.convert() and custom_img_annotation_.seg() will proce the test.txt file required by layoutLm model for prediction.
+Import the module custom_preprocess.py <br>
+Pass the image to custom_img_annotation_.write_annoteFile() for preprocessing the new image. <br>
+Calling custom_img_annotation_.convert() and custom_img_annotation_.seg() will proce the test.txt file required by layoutLm model for prediction. <br>
 
-After the preprocessing, run layoutlm using --dopredict method as follows.
+After the preprocessing, run layoutlm using --dopredict method as follows. <br>
 
 ~~~bash
 python run_seq_labeling.py  --do_predict \
