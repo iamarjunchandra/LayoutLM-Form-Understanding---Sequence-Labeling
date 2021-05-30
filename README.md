@@ -82,60 +82,22 @@ python run_seq_labeling.py  --data_dir data \
                             --fp16
 ~~~
 
-Note: The `DataParallel` will be enabled automatically to utilize all GPUs. If you want to train with `DistributedDataParallel`, please run the script like:
+### Prediction on a new Image
 
-~~~bash
-# Suppose you have 4 GPUs. 
+Import the module custom_preprocess.py
+Pass the image to custom_img_annotation_.write_annoteFile() for preprocessing the new image
+calling custom_img_annotation_.convert() and custom_img_annotation_.seg() will proce the test.txt file required by layoutLm model for prediction.
 
-python -m torch.distributed.launch --nproc_per_node=4 run_seq_labeling.py  --data_dir data \
+After the preprocessing, run layoutlm using --dopredict method as follows.
+
+python run_seq_labeling.py  --do_predict \
+                            --data_dir data \
                             --model_type layoutlm \
-                            --model_name_or_path path/to/pretrained/model/directory \
+                            --model_name_or_path output \
                             --do_lower_case \
-                            --max_seq_length 512 \
-                            --do_train \
-                            --num_train_epochs 100.0 \
-                            --logging_steps 10 \
-                            --save_steps -1 \
-                            --output_dir path/to/output/directory \
+                            --output_dir output \
                             --labels data/labels.txt \
-                            --per_gpu_train_batch_size 16 \
-                            --per_gpu_eval_batch_size 16 \
                             --fp16
-~~~
-
-
-
-Then you can do evaluation or inference by replacing `--do_train` with `--do_eval` or `--do_predict`
-
-Also, you can run Bert and RoBERTa baseline by modifying the `--model_type` argument. For more options, please refer to the arguments of `run.py`.
-
-### Document Image Classification Task
-
-We also fine-tune LayoutLM on the document image classification task. You can download the [RVL-CDIP](https://www.cs.cmu.edu/~aharley/rvl-cdip/) dataset from [here](https://www.cs.cmu.edu/~aharley/rvl-cdip/). Because this dataset only provides the document image, you should use the OCR tool to get the texts and bounding boxes. For example, you can easily use Tesseract, an open-source OCR engine, to generate corresponding OCR data in hOCR format. For more details, please refer to the [Tesseract wiki](https://github.com/tesseract-ocr/tesseract/wiki). Your processed data should look like [this sample data](https://1drv.ms/u/s!ApPZx_TWwibInTlBa5q3tQ7QUdH_?e=UZLVFw). 
-
-With the processed OCR data, you can run LayoutLM as follows:
-
-~~~bash
-python run_classification.py  --data_dir  data \
-                              --model_type layoutlm \
-                              --model_name_or_path path/to/pretrained/model/directory \
-                              --output_dir path/to/output/directory \
-                              --do_lower_case \
-                              --max_seq_length 512 \
-                              --do_train \
-                              --do_eval \
-                              --num_train_epochs 40.0 \
-                              --logging_steps 5000 \
-                              --save_steps 5000 \
-                              --per_gpu_train_batch_size 16 \
-                              --per_gpu_eval_batch_size 16 \
-                              --evaluate_during_training \
-                              --fp16 
-~~~
-
-Similarly, you can do evaluation by changing `--do_train` to `--do_eval` and `--do_test`
-
-Like the sequence labeling task, you can run Bert and RoBERTa baseline by modifying the `--model_type` argument.
 
 ### Results
 
