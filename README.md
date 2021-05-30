@@ -90,6 +90,7 @@ calling custom_img_annotation_.convert() and custom_img_annotation_.seg() will p
 
 After the preprocessing, run layoutlm using --dopredict method as follows.
 
+~~~bash
 python run_seq_labeling.py  --do_predict \
                             --data_dir data \
                             --model_type layoutlm \
@@ -98,7 +99,7 @@ python run_seq_labeling.py  --do_predict \
                             --output_dir output \
                             --labels data/labels.txt \
                             --fp16
-
+~~~
 ### Results
 
 #### SROIE (field-level)
